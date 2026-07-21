@@ -107,7 +107,7 @@ button {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 500;
+  z-index: 100;
   background-color: var(--color-green-dark);
   background-image: url('../assets/img/header-texture.png');
   background-size: cover;
@@ -228,7 +228,7 @@ button {
 
 .hero__content {
   position: relative;
-  z-index: 1;
+  z-index: 60;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -521,6 +521,43 @@ button {
   background-color: rgba(255, 255, 255, 0.22);
 }
 
+.about__play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: var(--color-green-dark);
+  border: 2px solid var(--color-green-light);
+  color: var(--color-white);
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition), background-color var(--transition);
+  z-index: 1;
+}
+
+.about__play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  background-color: var(--color-green-light);
+}
+
+.about__image-placeholder iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.about__image-placeholder.is-playing .about__play-btn {
+  display: none;
+}
+
 @media (max-width: 992px) {
   .about__inner {
     grid-template-columns: 1fr;
@@ -778,6 +815,8 @@ button {
 
 .galeria__carousel {
   position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
 }
 
 .galeria__track {
@@ -788,7 +827,6 @@ button {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  border-radius: 8px;
 }
 
 .galeria__track::-webkit-scrollbar {
@@ -802,7 +840,7 @@ button {
 .galeria__card {
   position: relative;
   flex: 0 0 auto;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 1072 / 580;
@@ -912,6 +950,30 @@ button {
   }
 }
 
+@media (max-width: 640px) {
+  .galeria__card {
+    aspect-ratio: 3 / 4;
+  }
+
+  .galeria__nav {
+    width: 34px;
+    height: 34px;
+  }
+
+  .galeria__nav svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .galeria__nav--prev {
+    left: 6px;
+  }
+
+  .galeria__nav--next {
+    right: 6px;
+  }
+}
+
 @media (max-width: 480px) {
   .galeria__header {
     align-items: flex-start;
@@ -1004,13 +1066,18 @@ button {
   position: relative;
   max-width: 1200px;
   margin-inline: auto;
+  aspect-ratio: 16 / 10;
   border-radius: 20px;
   overflow: hidden;
+  padding: 56px 88px;
+  background-color: var(--color-white);
 }
 
 .plantas__floorplan {
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   margin-inline: auto;
 }
 
@@ -1023,6 +1090,11 @@ button {
   justify-content: space-between;
   padding-inline: 24px;
   transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.plantas__nav-btn {
+  pointer-events: auto;
 }
 
 .plantas__nav-btn {
@@ -1136,7 +1208,16 @@ button {
   }
 
   .plantas__perks {
+    flex-direction: column;
+    align-items: center;
     gap: 24px;
+  }
+
+  .plantas__perk {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 220px;
   }
 }
 
@@ -1152,6 +1233,19 @@ button {
   .plantas__tab {
     padding: 10px 18px;
     font-size: 14px;
+  }
+
+  .plantas__viewer {
+    padding: 12px 34px;
+  }
+
+  .plantas__nav {
+    padding-inline: 4px;
+  }
+
+  .plantas__nav-btn img {
+    width: 28px;
+    height: 28px;
   }
 
   .plantas__diferenciais-logos {
@@ -1181,6 +1275,10 @@ button {
 }
 
 @media (max-width: 992px) {
+  .site-header {
+    z-index: 500;
+  }
+
   .main-nav {
     position: fixed;
     inset: 0 0 0 auto;
@@ -1761,7 +1859,7 @@ button {
   }
 
   .localizacao__card {
-    margin-top: -48px;
+    margin-top: -24px;
   }
 
   .localizacao__header {
@@ -1777,7 +1875,7 @@ button {
   }
 
   .localizacao__map-buttons {
-    top: 12px;
+    top: 56px;
     right: 12px;
     gap: 8px;
   }
@@ -1832,7 +1930,8 @@ button {
 @media (max-width: 600px) {
   .cta-banner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
 
   .cta-banner__text {
@@ -1940,7 +2039,7 @@ button {
 .ficha__block-lines {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   margin-top: 13px;
 }
 
@@ -1959,8 +2058,8 @@ button {
 .ficha__tipologia-col {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 320px;
+  gap: 6px;
+  max-width: 600px;
 }
 
 .ficha__tipologia-title {

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.typekit.net/txp2snz.css">
-  <link rel="stylesheet" href="css/main.css?v=122">
+  <link rel="stylesheet" href="css/main.css?v=136">
 </head>
 <body>
 
@@ -153,7 +153,12 @@
       </div>
 
       <div class="about__media">
-        <div class="about__image-placeholder" role="img" aria-label="Foto do empreendimento (em breve)">
+        <div class="about__image-placeholder" id="aboutVideo" data-video-src="https://drive.google.com/file/d/1IzDiwk-Nik58ZC8fZ77jVhorAgruGKMu/preview" role="img" aria-label="Vídeo institucional do empreendimento">
+          <button type="button" class="about__play-btn" aria-label="Reproduzir vídeo">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 5.5L20 13L8 20.5V5.5Z" fill="currentColor"/>
+            </svg>
+          </button>
           <button type="button" class="about__fullscreen-btn">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -241,6 +246,7 @@
           </button>
         </div>
       </div>
+    </div>
 
       <div class="galeria__carousel">
         <div class="galeria__track galeria__track--active" id="galeriaTrackDecorado" data-gallery="decorado">
@@ -663,7 +669,6 @@
           </svg>
         </button>
       </div>
-    </div>
   </section>
 
   <!-- ==================== PLANTAS ==================== -->
@@ -787,7 +792,7 @@
 
       <div class="cta-banner">
         <p class="cta-banner__text"><strong>Quer saber mais sobre o Bella Vida Graminha?</strong> Fale com um de nossos corretores</p>
-        <a href="#" class="cta-banner__btn">Entre em contato</a>
+        <a href="tel:+551926602525" class="cta-banner__btn">Entre em contato</a>
       </div>
     </div>
   </section>
@@ -948,7 +953,7 @@
 
       <div class="cta-banner">
         <p class="cta-banner__text"><strong>Quer saber mais sobre o Bella Vida Graminha?</strong> Fale com um de nossos corretores</p>
-        <a href="#" class="cta-banner__btn">Entre em contato</a>
+        <a href="tel:+551926602525" class="cta-banner__btn">Entre em contato</a>
       </div>
     </div>
   </section>
@@ -1235,10 +1240,8 @@
 
           <div class="site-footer__social">
             <span>Siga a gente:</span>
-            <a href="#" aria-label="Facebook"><img src="assets/icons/icon-social-facebook.svg" alt="" width="22" height="22"></a>
-            <a href="#" aria-label="YouTube"><img src="assets/icons/icon-social-youtube.svg" alt="" width="28" height="20"></a>
-            <a href="#" aria-label="Instagram"><img src="assets/icons/icon-social-instagram.svg" alt="" width="22" height="22"></a>
-            <a href="#" aria-label="LinkedIn"><img src="assets/icons/icon-social-linkedin.svg" alt="" width="22" height="22"></a>
+            <a href="https://www.facebook.com/luxorengenhariaeconstrucoes/" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/icons/icon-social-facebook.svg" alt="" width="22" height="22"></a>
+            <a href="https://www.instagram.com/luxorengenharia/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/icon-social-instagram.svg" alt="" width="22" height="22"></a>
           </div>
         </div>
 
@@ -1248,12 +1251,14 @@
           <div class="site-footer__legal">
             <span>Copyright © 2026 Luxor Engenharia</span>
             <span class="site-footer__legal-sep">|</span>
-            <a href="#">Política de privacidade</a>
+            <a href="politica-de-privacidade.html">Política de privacidade</a>
           </div>
 
           <div class="site-footer__credit">
             <span>Feito com ♥ por</span>
-            <img src="assets/icons/logo-balzani.svg" alt="Balzani" width="93" height="18">
+            <a href="https://balzani.com.br" target="_blank" rel="noopener">
+              <img src="assets/icons/logo-balzani.svg" alt="Balzani" width="93" height="18">
+            </a>
           </div>
         </div>
       </div>
@@ -1282,6 +1287,6 @@
     </button>
   </div>
 
-  <script src="js/main.js?v=8"></script>
+  <script src="js/main.js?v=15"></script>
 </body>
 </html>

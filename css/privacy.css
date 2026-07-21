@@ -1,0 +1,80 @@
+/* ==================== POLÍTICA DE PRIVACIDADE ==================== */
+.privacy {
+  padding-top: 200px;
+  padding-bottom: 96px;
+}
+
+.privacy__container {
+  max-width: 900px;
+}
+
+.privacy__eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-green-dark);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.privacy__title {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-blue);
+  margin-bottom: 40px;
+}
+
+.privacy__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.privacy__content p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #3a3a3a;
+}
+
+.privacy__content h2 {
+  margin-top: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-green-dark);
+}
+
+.privacy__content a {
+  color: var(--color-blue);
+  text-decoration: underline;
+}
+
+.privacy__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 24px;
+}
+
+.privacy__list li {
+  list-style: disc;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #3a3a3a;
+}
+
+@media (max-width: 768px) {
+  .privacy {
+    padding-top: 150px;
+    padding-bottom: 64px;
+  }
+
+  .privacy__title {
+    font-size: 30px;
+    margin-bottom: 28px;
+  }
+
+  .privacy__content h2 {
+    font-size: 20px;
+  }
+}

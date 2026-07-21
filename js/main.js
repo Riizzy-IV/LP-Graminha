@@ -35,6 +35,39 @@
   onScroll();
 })();
 
+// ==================== ABOUT VIDEO (GOOGLE DRIVE) ====================
+(function () {
+  const wrapper = document.getElementById('aboutVideo');
+  if (!wrapper) return;
+
+  const playBtn = wrapper.querySelector('.about__play-btn');
+  const fullscreenBtn = wrapper.querySelector('.about__fullscreen-btn');
+  const videoSrc = wrapper.dataset.videoSrc;
+
+  const loadVideo = () => {
+    if (wrapper.classList.contains('is-playing')) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = videoSrc;
+    iframe.allow = 'autoplay; fullscreen';
+    iframe.allowFullscreen = true;
+    wrapper.appendChild(iframe);
+    wrapper.classList.add('is-playing');
+  };
+
+  if (playBtn) {
+    playBtn.addEventListener('click', loadVideo);
+  }
+
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
+      loadVideo();
+      if (wrapper.requestFullscreen) {
+        wrapper.requestFullscreen();
+      }
+    });
+  }
+})();
+
 // ==================== GALERIA CAROUSEL ====================
 (function () {
   const carousel = document.querySelector('.galeria__carousel');
@@ -45,7 +78,7 @@
 
   if (!carousel || !tracks.length || !prevBtn || !nextBtn) return;
 
-  const container = carousel.closest('.container');
+  const container = document.querySelector('#galeria .container');
   let activeTrack = document.querySelector('.galeria__track--active') || tracks[0];
 
   const getStep = (track) => {
@@ -57,16 +90,37 @@
 
   const sizeTrack = (track) => {
     const cards = track.querySelectorAll('.galeria__card');
-    const carouselLeft = carousel.getBoundingClientRect().left;
-    const cardRatio = window.innerWidth <= 640 ? 0.92 : 0.72;
-    const cardWidth = container.getBoundingClientRect().width * cardRatio;
-    const bleedWidth = window.innerWidth - carouselLeft;
+    const isMobile = window.innerWidth <= 640;
+    const viewportWidth = window.innerWidth;
 
-    carousel.style.width = bleedWidth + 'px';
-    cards.forEach((card) => {
-      card.style.width = cardWidth + 'px';
-    });
-    nextBtn.style.right = (bleedWidth - cardWidth + 24) + 'px';
+    if (isMobile) {
+      // no side peeks on mobile: one card at a time, aligned to the
+      // standard container gutter instead of true edge-to-edge bleed
+      const containerRect = container.getBoundingClientRect();
+      const containerPadLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0;
+      const gutter = containerRect.left + containerPadLeft;
+      const contentWidth = containerRect.width - containerPadLeft * 2;
+      const cardWidth = contentWidth * 0.92;
+      cards.forEach((card) => {
+        card.style.width = cardWidth + 'px';
+      });
+      track.style.paddingLeft = gutter + 'px';
+      track.style.paddingRight = gutter + 'px';
+      prevBtn.style.left = '12px';
+      nextBtn.style.right = '12px';
+    } else {
+      // center card fully visible, neighboring cards peek on both sides,
+      // full-bleed edge to edge of the viewport
+      const cardWidth = viewportWidth * 0.62;
+      const sidePad = Math.max((viewportWidth - cardWidth) / 2, 0);
+      cards.forEach((card) => {
+        card.style.width = cardWidth + 'px';
+      });
+      track.style.paddingLeft = sidePad + 'px';
+      track.style.paddingRight = sidePad + 'px';
+      prevBtn.style.left = (sidePad - 22) + 'px';
+      nextBtn.style.right = (sidePad - 22) + 'px';
+    }
   };
 
   const layoutAll = () => {
