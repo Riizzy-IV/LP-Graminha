@@ -70,16 +70,10 @@
 
 // ==================== GALERIA CAROUSEL ====================
 (function () {
-  const carousel = document.querySelector('.galeria__carousel');
-  const tracks = document.querySelectorAll('.galeria__track');
-  const prevBtn = document.getElementById('galeriaPrev');
-  const nextBtn = document.getElementById('galeriaNext');
-  const tabs = document.querySelectorAll('.galeria__tab');
-
-  if (!carousel || !tracks.length || !prevBtn || !nextBtn) return;
-
+  const carousels = document.querySelectorAll('.galeria__carousel');
   const container = document.querySelector('#galeria .container');
-  let activeTrack = document.querySelector('.galeria__track--active') || tracks[0];
+
+  if (!carousels.length || !container) return;
 
   const getStep = (track) => {
     const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
@@ -88,75 +82,82 @@
     return cardWidth + gap;
   };
 
-  const sizeTrack = (track) => {
-    const cards = track.querySelectorAll('.galeria__card');
-    const isMobile = window.innerWidth <= 640;
-    const viewportWidth = window.innerWidth;
+  const setupCarousel = (carousel) => {
+    const track = carousel.querySelector('.galeria__track');
+    const prevBtn = carousel.querySelector('.galeria__nav--prev');
+    const nextBtn = carousel.querySelector('.galeria__nav--next');
 
-    if (isMobile) {
-      // no side peeks on mobile: one card at a time, aligned to the
-      // standard container gutter instead of true edge-to-edge bleed
-      const containerRect = container.getBoundingClientRect();
-      const containerPadLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0;
-      const gutter = containerRect.left + containerPadLeft;
-      const contentWidth = containerRect.width - containerPadLeft * 2;
-      const cardWidth = contentWidth * 0.92;
-      cards.forEach((card) => {
-        card.style.width = cardWidth + 'px';
-      });
-      track.style.paddingLeft = gutter + 'px';
-      track.style.paddingRight = gutter + 'px';
-      prevBtn.style.left = '12px';
-      nextBtn.style.right = '12px';
-    } else {
-      // center card fully visible, neighboring cards peek on both sides,
-      // full-bleed edge to edge of the viewport
-      const cardWidth = viewportWidth * 0.62;
-      const sidePad = Math.max((viewportWidth - cardWidth) / 2, 0);
-      cards.forEach((card) => {
-        card.style.width = cardWidth + 'px';
-      });
-      track.style.paddingLeft = sidePad + 'px';
-      track.style.paddingRight = sidePad + 'px';
-      prevBtn.style.left = (sidePad - 22) + 'px';
-      nextBtn.style.right = (sidePad - 22) + 'px';
-    }
+    if (!track || !prevBtn || !nextBtn) return () => {};
+
+    const sizeTrack = () => {
+      const cards = track.querySelectorAll('.galeria__card');
+      const isMobile = window.innerWidth <= 640;
+      const viewportWidth = window.innerWidth;
+
+      if (isMobile) {
+        // no side peeks on mobile: one card at a time, aligned to the
+        // standard container gutter instead of true edge-to-edge bleed
+        const containerRect = container.getBoundingClientRect();
+        const containerPadLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0;
+        const gutter = containerRect.left + containerPadLeft;
+        const contentWidth = containerRect.width - containerPadLeft * 2;
+        const cardWidth = contentWidth * 0.92;
+        cards.forEach((card) => {
+          card.style.width = cardWidth + 'px';
+        });
+        track.style.paddingLeft = gutter + 'px';
+        track.style.paddingRight = gutter + 'px';
+        // scroll-snap-align: start snaps to the padding-box edge, not the
+        // visual gutter, so scroll-padding tells it where "start" really is
+        track.style.scrollPaddingLeft = gutter + 'px';
+        track.style.scrollPaddingRight = gutter + 'px';
+        prevBtn.style.left = '12px';
+        nextBtn.style.right = '12px';
+      } else {
+        // first card flush with the container gutter (same grid as the
+        // section title), next card peeks on the right, full-bleed track
+        const containerRect = container.getBoundingClientRect();
+        const containerPadLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0;
+        const gutter = containerRect.left + containerPadLeft;
+        const cardWidth = viewportWidth * 0.62;
+        const sidePad = Math.max((viewportWidth - cardWidth) / 2, 0);
+        const cardRightEdge = gutter + cardWidth;
+        cards.forEach((card) => {
+          card.style.width = cardWidth + 'px';
+        });
+        track.style.paddingLeft = gutter + 'px';
+        track.style.paddingRight = sidePad + 'px';
+        // scroll-snap-align: start snaps to the padding-box edge, not the
+        // visual gutter, so scroll-padding tells it where "start" really is
+        track.style.scrollPaddingLeft = gutter + 'px';
+        track.style.scrollPaddingRight = sidePad + 'px';
+        prevBtn.style.left = (gutter - 22) + 'px';
+        nextBtn.style.right = (viewportWidth - cardRightEdge - 22) + 'px';
+      }
+    };
+
+    const scrollByStep = (direction) => {
+      const step = getStep(track) * direction;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      let target = track.scrollLeft + step;
+
+      if (target > maxScroll - 2) {
+        target = 0; // loop back to the start
+      } else if (target < 0) {
+        target = maxScroll; // loop to the end
+      }
+
+      track.scrollTo({ left: target, behavior: 'smooth' });
+    };
+
+    nextBtn.addEventListener('click', () => scrollByStep(1));
+    prevBtn.addEventListener('click', () => scrollByStep(-1));
+
+    return sizeTrack;
   };
 
-  const layoutAll = () => {
-    tracks.forEach(sizeTrack);
-  };
-
-  const scrollByStep = (direction) => {
-    const track = activeTrack;
-    const step = getStep(track) * direction;
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    let target = track.scrollLeft + step;
-
-    if (target > maxScroll - 2) {
-      target = 0; // loop back to the start
-    } else if (target < 0) {
-      target = maxScroll; // loop to the end
-    }
-
-    track.scrollTo({ left: target, behavior: 'smooth' });
-  };
-
-  nextBtn.addEventListener('click', () => scrollByStep(1));
-  prevBtn.addEventListener('click', () => scrollByStep(-1));
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const key = tab.dataset.gallery;
-      const nextTrack = document.querySelector(`.galeria__track[data-gallery="${key}"]`);
-      if (!nextTrack || nextTrack === activeTrack) return;
-
-      tabs.forEach((t) => t.classList.toggle('galeria__tab--active', t === tab));
-      tracks.forEach((t) => t.classList.toggle('galeria__track--active', t === nextTrack));
-      activeTrack = nextTrack;
-      layoutAll();
-    });
-  });
+  const layoutFns = Array.from(carousels).map(setupCarousel);
+  const layoutAll = () => layoutFns.forEach((fn) => fn());
 
   window.addEventListener('resize', layoutAll);
   layoutAll();
