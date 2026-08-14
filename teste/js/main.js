@@ -102,8 +102,12 @@
         const gutter = containerRect.left + containerPadLeft;
         const contentWidth = containerRect.width - containerPadLeft * 2;
         const cardWidth = contentWidth * 0.92;
+        // set height explicitly instead of relying solely on the CSS
+        // aspect-ratio box, which some mobile Safari versions fail to
+        // resolve when the width comes from an inline style + scroll-snap
         cards.forEach((card) => {
           card.style.width = cardWidth + 'px';
+          card.style.height = (cardWidth * 4 / 3) + 'px';
         });
         track.style.paddingLeft = gutter + 'px';
         track.style.paddingRight = gutter + 'px';
@@ -124,6 +128,7 @@
         const cardRightEdge = gutter + cardWidth;
         cards.forEach((card) => {
           card.style.width = cardWidth + 'px';
+          card.style.height = (cardWidth * 580 / 1072) + 'px';
         });
         track.style.paddingLeft = gutter + 'px';
         track.style.paddingRight = sidePad + 'px';
