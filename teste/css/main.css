@@ -1836,6 +1836,14 @@ button {
   color: var(--color-blue);
 }
 
+.localizacao__title-ref {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
 .localizacao__text {
   max-width: 900px;
   font-size: 18px;
