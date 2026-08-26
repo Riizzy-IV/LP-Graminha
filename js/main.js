@@ -217,6 +217,21 @@
   const submitBtnLabel = submitBtn.firstChild;
   const originalLabel = submitBtnLabel.textContent;
 
+  const phoneInput = form.telefone;
+  phoneInput.addEventListener('input', () => {
+    const digits = phoneInput.value.replace(/\D/g, '').slice(0, 11);
+
+    if (digits.length <= 2) {
+      phoneInput.value = digits.replace(/^(\d*)/, '($1');
+    } else if (digits.length <= 6) {
+      phoneInput.value = digits.replace(/^(\d{2})(\d*)/, '($1) $2');
+    } else if (digits.length <= 10) {
+      phoneInput.value = digits.replace(/^(\d{2})(\d{4})(\d*)/, '($1) $2-$3');
+    } else {
+      phoneInput.value = digits.replace(/^(\d{2})(\d{5})(\d*)/, '($1) $2-$3');
+    }
+  });
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
