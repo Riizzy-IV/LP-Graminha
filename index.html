@@ -187,18 +187,18 @@
         <h2 class="simulador__title">Faça sua simulação</h2>
         <p class="simulador__subtitle">Conquiste seu apê com renda familiar a partir R$ 5.000,00</p>
 
-        <form class="simulador__form">
+        <form class="simulador__form" id="simuladorForm">
           <div class="simulador__field">
             <label for="sim-nome">Nome:</label>
-            <input type="text" id="sim-nome" name="nome" placeholder="Digite seu nome">
+            <input type="text" id="sim-nome" name="nome" placeholder="Digite seu nome" required>
           </div>
           <div class="simulador__field">
             <label for="sim-email">E-mail:</label>
-            <input type="email" id="sim-email" name="email" placeholder="Digite seu e-mail">
+            <input type="email" id="sim-email" name="email" placeholder="Digite seu e-mail" required>
           </div>
           <div class="simulador__field">
             <label for="sim-telefone">Telefone:</label>
-            <input type="tel" id="sim-telefone" name="telefone" placeholder="Digite seu telefone com DDD">
+            <input type="tel" id="sim-telefone" name="telefone" placeholder="Digite seu telefone com DDD" required>
           </div>
           <button type="submit" class="btn btn--outline simulador__submit">
             Simular financiamento

@@ -205,6 +205,36 @@
   if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIndex + 1));
 })();
 
+// ==================== SIMULADOR FORM ====================
+(function () {
+  const form = document.getElementById('simuladorForm');
+  if (!form) return;
+
+  const WEBHOOK_URL = 'https://hook.us1.make.com/1u3h9rw44mnu8u9tt109ep5qeuybrks4';
+  const WHATSAPP_NUMBER = '551926602525';
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const nome = form.nome.value.trim();
+    const email = form.email.value.trim();
+    const telefone = form.telefone.value.trim();
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome, email, telefone, origem: 'Simulador - Bella Vida Graminha' }),
+      keepalive: true,
+    }).catch(() => {});
+
+    const message = `Olá! Me chamo ${nome} e quero simular o financiamento do Bella Vida Graminha.\nE-mail: ${email}\nTelefone: ${telefone}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl, '_blank', 'noopener');
+    form.reset();
+  });
+})();
+
 // ==================== LIGHTBOX ====================
 (function () {
   const lightbox = document.getElementById('lightbox');
