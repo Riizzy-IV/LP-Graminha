@@ -213,8 +213,14 @@
   const WEBHOOK_URL = 'https://hook.us1.make.com/1u3h9rw44mnu8u9tt109ep5qeuybrks4';
   const WHATSAPP_NUMBER = '551926602525';
 
+  const submitBtn = form.querySelector('.simulador__submit');
+  const submitBtnLabel = submitBtn.firstChild;
+  const originalLabel = submitBtnLabel.textContent;
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    if (submitBtn.disabled) return;
 
     const nome = form.nome.value.trim();
     const email = form.email.value.trim();
@@ -227,11 +233,22 @@
       keepalive: true,
     }).catch(() => {});
 
-    const message = `Olá! Me chamo ${nome} e quero simular o financiamento do Bella Vida Graminha.\nE-mail: ${email}\nTelefone: ${telefone}`;
+    const message = `Olá! Me chamo ${nome} e quero simular o financiamento do Bella Vida Graminha.`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    window.open(whatsappUrl, '_blank', 'noopener');
-    form.reset();
+    submitBtn.disabled = true;
+    submitBtnLabel.textContent = 'Enviando...';
+
+    setTimeout(() => {
+      submitBtnLabel.textContent = 'Enviado!';
+
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank', 'noopener');
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtnLabel.textContent = originalLabel;
+      }, 900);
+    }, 900);
   });
 })();
 
