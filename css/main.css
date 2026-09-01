@@ -1828,6 +1828,32 @@ button {
 
 }
 
+.localizacao__tabs {
+  display: flex;
+  gap: 12px;
+  padding: 4px;
+  border-radius: 12px;
+  background-color: #eef1f8;
+}
+
+.localizacao__tab {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #4a5568;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.localizacao__tab--active {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
 .localizacao__title {
   max-width: 900px;
   font-size: 40px;

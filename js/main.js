@@ -168,6 +168,38 @@
   layoutAll();
 })();
 
+// ==================== LOCALIZACAO TABS ====================
+(function () {
+  const tabsWrap = document.getElementById('localizacaoTabs');
+  const map = document.getElementById('localizacaoMap');
+  const title = document.getElementById('localizacaoTitle');
+  const ref = document.getElementById('localizacaoRef');
+  const text = document.getElementById('localizacaoText');
+  const mapsBtn = document.getElementById('localizacaoMapsBtn');
+  const wazeBtn = document.getElementById('localizacaoWazeBtn');
+
+  if (!tabsWrap || !map || !title || !ref || !text || !mapsBtn || !wazeBtn) return;
+
+  const tabs = Array.from(tabsWrap.querySelectorAll('.localizacao__tab'));
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      if (tab.classList.contains('localizacao__tab--active')) return;
+
+      tabs.forEach((t) => t.classList.toggle('localizacao__tab--active', t === tab));
+
+      const query = tab.dataset.query;
+      map.src = 'https://www.google.com/maps?q=' + query + '&output=embed';
+      mapsBtn.href = 'https://www.google.com/maps/search/?api=1&query=' + query;
+      wazeBtn.href = 'https://waze.com/ul?q=' + query;
+
+      title.firstChild.textContent = tab.dataset.title;
+      ref.textContent = tab.dataset.ref;
+      text.textContent = tab.dataset.text;
+    });
+  });
+})();
+
 // ==================== PLANTAS TABS ====================
 (function () {
   const tabsWrap = document.getElementById('plantasTabs');
